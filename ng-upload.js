@@ -110,6 +110,12 @@ angular.module('ngUpload', [])
         element.attr("action", element.attr("action") + separator + "_t=" + new Date().getTime());
         element.attr("enctype", "multipart/form-data");
         element.attr("encoding", "multipart/form-data");
+
+        // append the CSRF Token, if it's present
+        var csrfToken = $('meta[name=csrf-token]').attr('content');
+        if(csrfToken !== undefined) {
+          $(element).append("<input type='hidden' name='authenticity_token' value='" + csrfToken + "'>")
+        }
       }
     };
   }]);
